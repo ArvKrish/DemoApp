@@ -1,0 +1,38 @@
+@charset "ISO-8859-1";
+
+body{
+	background-color:#001f3f;
+	color:#7FDBFF;
+}
+.header{
+	width:100%;
+	height:30%;
+	display:inline;
+	color:#EE8572;
+	
+	
+}
+.greet{
+	float:left;
+	width:50%;
+}
+
+.status{
+	float:left;
+	width:50%;
+}
+.form{
+	margin:100px;
+}
+.message{
+	width:80%;
+	height:50%;
+	background-color:#D4f3ef;
+	margin:100px;
+	border:1px solid white;
+	color:#9a1f40;
+}
+.info{
+	margin:100px;
+
+}
