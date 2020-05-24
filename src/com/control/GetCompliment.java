@@ -1,6 +1,7 @@
 package com.control;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,21 +16,34 @@ public class GetCompliment extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-		String compliment = req.getParameter("compliment");
-		if (compliment == null)
-			res.sendRedirect("/DemoApp/");
+		Enumeration<String> en = req.getParameterNames();
 		HttpSession session = req.getSession(false);
 		if (session == null) {
+			System.out.println("null");
 			res.sendRedirect("/DemoApp/");
 		}
 
-		session.setAttribute("compliment", compliment);
-		session.setAttribute("Message", "Compliment");
+		else if (session != null) {
 
-		RequestDispatcher r = req.getRequestDispatcher("/Opponent.jsp");
-		r.forward(req, res);
+			if (en.hasMoreElements()) {
 
+				String compliment = req.getParameter("compliment");
+				if (compliment == null)
+					res.sendRedirect("/DemoApp/");
+
+				session.setAttribute("compliment", compliment);
+				session.setAttribute("Message", "Compliment");
+
+				RequestDispatcher r = req.getRequestDispatcher("/Opponent.jsp");
+				r.forward(req, res);
+
+			} else {
+				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
+				r.forward(req, res);
+
+			}
+		}
 	}
 }

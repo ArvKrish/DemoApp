@@ -1,6 +1,7 @@
 package com.control;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,23 +18,38 @@ public class Opponent extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+
+		Enumeration<String> en = req.getParameterNames();
 
 		HttpSession session = req.getSession(false);
 		if (session == null) {
+			System.out.println("null");
 			res.sendRedirect("/DemoApp/");
 		}
-		int uKey = (int) (session.getAttribute("uKey"));
-		String name = (req.getParameter("oname"));
-		int key = Integer.parseInt(req.getParameter("key"));
-		boolean check = Keys.newVillain(uKey, name, key);
 
-		if (check)
-			session.setAttribute("Message", "New Villain added");
-		else
-			session.setAttribute("Message", "Duplicate code. Try again!");
-		session.setAttribute("villainSize", Keys.villainSize(uKey));
-		RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-		r.forward(req, res);
+		else if (session != null) {
+			System.out.println(session.getId());
+			if (en.hasMoreElements()) {
+
+				int uKey = (int) (session.getAttribute("uKey"));
+				String name = (req.getParameter("oname"));
+				int key = Integer.parseInt(req.getParameter("key"));
+				boolean check = Keys.newVillain(uKey, name, key);
+
+				if (check)
+					session.setAttribute("Message", "New Villain added");
+				else
+					session.setAttribute("Message", "Duplicate code. Try again!");
+				session.setAttribute("villainSize", Keys.villainSize(uKey));
+				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
+				r.forward(req, res);
+
+			} else {
+				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
+				r.forward(req, res);
+			}
+		}
+
 	}
 }

@@ -1,6 +1,7 @@
 package com.control;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,28 +18,35 @@ public class Welcome extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		String name = (req.getParameter("pname"));
-		int power = Integer.parseInt(req.getParameter("power"));
-		int uKey = Keys.start(name, power);
-		if (uKey > 0) {
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-			HttpSession session = req.getSession(true);
+		Enumeration<String> en = req.getParameterNames();
 
-			System.out.println(session.getId());
+		if (en.hasMoreElements()) {
 
-			String playerName = Keys.findPlayer(uKey).getName();
-			double playerHealth = Keys.findPlayer(uKey).getHealth();
-			double playerPower = Keys.findPlayer(uKey).getPower();
-			session.setAttribute("playerName", playerName);
-			session.setAttribute("playerHealth", playerHealth);
-			session.setAttribute("playerPower", playerPower);
-			session.setAttribute("uKey", uKey);
-			RequestDispatcher r = req.getRequestDispatcher("/NewOpponent.jsp");
-			r.forward(req, res);
-		} else {
+			String name = (req.getParameter("pname"));
+			int power = Integer.parseInt(req.getParameter("power"));
+			int uKey = Keys.start(name, power);
+			if (uKey > 0) {
+
+				HttpSession session = req.getSession(true);
+
+				System.out.println(session.getId());
+
+				String playerName = Keys.findPlayer(uKey).getName();
+				double playerHealth = Keys.findPlayer(uKey).getHealth();
+				double playerPower = Keys.findPlayer(uKey).getPower();
+				session.setAttribute("playerName", playerName);
+				session.setAttribute("playerHealth", playerHealth);
+				session.setAttribute("playerPower", playerPower);
+				session.setAttribute("uKey", uKey);
+				RequestDispatcher r = req.getRequestDispatcher("/NewOpponent.jsp");
+				r.forward(req, res);
+			}
+
+		}
+		else {
 			res.sendRedirect("/DemoApp/");
-
 		}
 	}
 
