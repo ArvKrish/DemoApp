@@ -1,84 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
- 
- 
- <welcome-file-list><welcome-file>index.html
- </welcome-file></welcome-file-list>
- 
- <error-page>
- <error-code>405</error-code>
- <location>/WEB-INF/error/notAllowed.html</location>
- </error-page>
- <error-page>
- <error-code>500</error-code>
- <location>/WEB-INF/error/notAllowed.html</location>
- </error-page>
- <error-page>
- <error-code>404</error-code>
- <location>/WEB-INF/error/notFound.html</location>
- 
- </error-page>
-  
- <servlet>
- 
- <servlet-name>Welcome</servlet-name>
- <servlet-class>com.ak.Welcome</servlet-class>
- </servlet>
- <servlet-mapping>
- 
- <servlet-name>Welcome</servlet-name>
- <url-pattern>/Welcome</url-pattern> 
- 
- </servlet-mapping>
- 
-  <servlet>
- 
- <servlet-name>Opp</servlet-name>
- <servlet-class>com.ak.Opponent</servlet-class>
- </servlet>
- <servlet-mapping>
- 
- <servlet-name>Opp</servlet-name>
- <url-pattern>/Action</url-pattern> 
- 
- </servlet-mapping>
- 
- 
- <servlet>
- 
- <servlet-name>Move</servlet-name>
- <servlet-class>com.ak.Move</servlet-class>
- </servlet>
- <servlet-mapping>
- 
- <servlet-name>Move</servlet-name>
- <url-pattern>/Move</url-pattern> 
- 
- </servlet-mapping>
- 
- <servlet>
- 
- <servlet-name>OppGet</servlet-name>
- <servlet-class>com.ak.GetOpponent</servlet-class>
- </servlet>
- <servlet-mapping>
- 
- <servlet-name>OppGet</servlet-name>
- <url-pattern>/GetOpponent</url-pattern> 
- 
- </servlet-mapping>
- 
- <servlet>
- 
- <servlet-name>ComGet</servlet-name>
- <servlet-class>com.ak.GetCompliment</servlet-class>
- </servlet>
- <servlet-mapping>
- 
- <servlet-name>ComGet</servlet-name>
- <url-pattern>/GetCompliment</url-pattern> 
- 
- </servlet-mapping>
- 
- 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+
+	<welcome-file-list>
+		<welcome-file>index.html
+ </welcome-file>
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>405</error-code>
+		<location>/index.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/index.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/error/notFound.html</location>
+
+	</error-page>
+
+	<servlet>
+
+		<servlet-name>Welcome</servlet-name>
+		<servlet-class>com.control.Welcome</servlet-class>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>Welcome</servlet-name>
+		<url-pattern>/Welcome</url-pattern>
+
+	</servlet-mapping>
+
+	<servlet>
+
+		<servlet-name>Opp</servlet-name>
+		<servlet-class>com.control.Opponent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>Opp</servlet-name>
+		<url-pattern>/Action</url-pattern>
+
+	</servlet-mapping>
+
+
+	<servlet>
+
+		<servlet-name>Move</servlet-name>
+		<servlet-class>com.control.Move</servlet-class>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>Move</servlet-name>
+		<url-pattern>/Move</url-pattern>
+
+	</servlet-mapping>
+
+	<servlet>
+
+		<servlet-name>OppGet</servlet-name>
+		<servlet-class>com.control.GetOpponent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>OppGet</servlet-name>
+		<url-pattern>/GetOpponent</url-pattern>
+
+	</servlet-mapping>
+
+	<servlet>
+
+		<servlet-name>ComGet</servlet-name>
+		<servlet-class>com.control.GetCompliment</servlet-class>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>ComGet</servlet-name>
+		<url-pattern>/GetCompliment</url-pattern>
+
+	</servlet-mapping>
+
+
 </web-app>

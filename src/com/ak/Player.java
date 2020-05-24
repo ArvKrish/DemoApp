@@ -2,94 +2,73 @@ package com.ak;
 
 import java.util.*;
 
-public class Player extends Character{
+public class Player extends Character {
 	private boolean deathChecker;
 	private boolean healthChecker;
-	public HashMap<Integer,Villain> villains=new HashMap<>();
+	public HashMap<Integer, Villain> villains = new HashMap<>();
 	private HashSet<String> attributes = new HashSet<>();
-	
-	Player(String name, int power){
-		super(name,100,power);
+
+	Player(String name, int power) {
+		super(name, 100, power);
 	}
-	
+
 	public void setAttributes(String attr) {
 		attributes.add(attr);
 	}
-	
-	public boolean addNewVillain(String name,int code) {
-		if(villains.containsKey(code))
+
+	public boolean addNewVillain(String name, int code) {
+		if (villains.containsKey(code))
 			return false;
-		else 
+		else
 			villains.put(code, new Villain(name));
-			return true;
-	}	
+		return true;
+	}
+
 	public String getAttributes() {
-		String allAttribute="The Attributes of "+this.getName()+" are:\n";
-		for(String attr: attributes) {
-			allAttribute+=attr+"\n";
+		String allAttribute = "The Attributes of " + this.getName() + " are:\n";
+		for (String attr : attributes) {
+			allAttribute += attr + "\n";
 		}
 		return allAttribute;
 	}
-	
-
 
 	public String strike(Villain v) {
-		healthChecker=(this.getHealth()-(this.getHealth()*(this.getPower()/200)))>0?true:false;
-		if(healthChecker) {
-			
-			this.decreaseHealth(this,0);
-			
-			deathChecker=this.decreaseHealth(v,0);
-		
-			if(deathChecker) {
+		healthChecker = (this.getHealth() - (this.getHealth() * (this.getPower() / 200))) > 0 ? true : false;
+		if (healthChecker) {
+
+			this.decreaseHealth(this, 0);
+
+			deathChecker = this.decreaseHealth(v, 0);
+
+			if (deathChecker) {
 				return "<br/>K.O.<br/>";
-			}
-			else {
+			} else {
 				return this.strikeUpdate();
 			}
-		}
-		else {
+		} else {
 			return "<br/>Energy too low<br/>Please use powerups<br/>";
 		}
-	
+
 	}
-	
+
 	public String strikeUpdate() {
-		
+
 		return "<br/> Whaat a strike!<br/>";
 	}
+
 	public String powerUp() {
 		this.boostHealth(.10);
-		return "\nDrinking Boost<br/>Restoring health:\t"+this.getHealth();
+		return "\nDrinking Boost<br/>Restoring health:\t" + this.getHealth();
 	}
-	
-	
-	public void strike(Villain v,int dummy) {
-		healthChecker=(this.getHealth()-(this.getHealth()*(this.getPower()/200)))>0?true:false;
-		if(healthChecker) {
-			
-			this.decreaseHealth(this,1);
-			
-			this.decreaseHealth(v,1);
-		
-			
-		}
-		else {
-			System.out.println("\nEnergy too low\nPlease use powerups");
-		}
-	
-	}
-	
-	
+
 	public String powerUp(int energy) {
 		System.out.println();
 		this.boostHealth(.25);
-		return "\nDrinking Boost\nRestoring health:\t"+this.getHealth();
+		return "\nDrinking Boost\nRestoring health:\t" + this.getHealth();
 	}
-	
+
 	public String getSummary() {
-		 return "Player's "+(this.toString());
-	 }
-	
-	
+		return "Player's " + (this.toString());
+	}
+
 }
