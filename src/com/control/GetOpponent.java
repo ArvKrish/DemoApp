@@ -18,20 +18,20 @@ public class GetOpponent extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		Enumeration<String> en = req.getParameterNames();
-		HttpSession session = req.getSession(false);
+		Enumeration<String> en = request.getParameterNames();
+		HttpSession session = request.getSession(false);
 
 		if (session == null) {
 			System.out.println("null");
-			res.sendRedirect("/DemoApp/");
+			response.sendRedirect("/DemoApp/");
 		}
 
 		else if (session != null) {
 			if (en.hasMoreElements()) {
 
-				String action = req.getParameter("submit");
+				String action = request.getParameter("submit");
 
 				int uKey = (int) session.getAttribute("uKey");
 				String method = (String) session.getAttribute("Message");
@@ -40,7 +40,7 @@ public class GetOpponent extends HttpServlet {
 				String str = "";
 				if ("value".equalsIgnoreCase(action)) {
 
-					String name = req.getParameter("oname");
+					String name = request.getParameter("oname");
 					if ("strike".equalsIgnoreCase(method)) {
 						str = Keys.villainAction(uKey, 1, name, 0, "");
 					} else if ("compliment".equalsIgnoreCase(method)) {
@@ -55,14 +55,14 @@ public class GetOpponent extends HttpServlet {
 					session.setAttribute("playerHealth", playerHealth);
 
 					session.setAttribute("Message", str);
-					res.sendRedirect("/Actions.jsp");
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 
 				}
 				if ("key".equalsIgnoreCase(action)) {
 
-					int key = Integer.parseInt(req.getParameter("key"));
+					int key = Integer.parseInt(request.getParameter("key"));
 					System.out.println(key + "key");
 					if ("strike".equalsIgnoreCase(method))
 						str = Keys.villainAction(uKey, 1, "", key, "");
@@ -82,13 +82,13 @@ public class GetOpponent extends HttpServlet {
 
 					session.setAttribute("Message", str);
 
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 
 				}
 			} else {
-				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-				r.forward(req, res);
+				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+				r.forward(request, response);
 
 			}
 		}

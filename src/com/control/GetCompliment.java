@@ -16,32 +16,32 @@ public class GetCompliment extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		Enumeration<String> en = req.getParameterNames();
-		HttpSession session = req.getSession(false);
+		Enumeration<String> en = request.getParameterNames();
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			System.out.println("null");
-			res.sendRedirect("/DemoApp/");
+			response.sendRedirect("/DemoApp/");
 		}
 
 		else if (session != null) {
 
 			if (en.hasMoreElements()) {
 
-				String compliment = req.getParameter("compliment");
+				String compliment = request.getParameter("compliment");
 				if (compliment == null)
-					res.sendRedirect("/DemoApp/");
+					response.sendRedirect("/DemoApp/");
 
 				session.setAttribute("compliment", compliment);
 				session.setAttribute("Message", "Compliment");
 
-				RequestDispatcher r = req.getRequestDispatcher("/Opponent.jsp");
-				r.forward(req, res);
+				RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
+				r.forward(request, response);
 
 			} else {
-				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-				r.forward(req, res);
+				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+				r.forward(request, response);
 
 			}
 		}

@@ -18,18 +18,18 @@ public class Welcome extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		Enumeration<String> en = req.getParameterNames();
+		Enumeration<String> en = request.getParameterNames();
 
 		if (en.hasMoreElements()) {
 
-			String name = (req.getParameter("pname"));
-			int power = Integer.parseInt(req.getParameter("power"));
+			String name = (request.getParameter("pname"));
+			int power = Integer.parseInt(request.getParameter("power"));
 			int uKey = Keys.start(name, power);
 			if (uKey > 0) {
 
-				HttpSession session = req.getSession(true);
+				HttpSession session = request.getSession(true);
 
 				System.out.println(session.getId());
 
@@ -40,13 +40,14 @@ public class Welcome extends HttpServlet {
 				session.setAttribute("playerHealth", playerHealth);
 				session.setAttribute("playerPower", playerPower);
 				session.setAttribute("uKey", uKey);
-				RequestDispatcher r = req.getRequestDispatcher("/NewOpponent.jsp");
-				r.forward(req, res);
+				RequestDispatcher r = request.getRequestDispatcher("/NewOpponent.jsp");
+				r.forward(request, response);
 			}
 
 		}
 		else {
-			res.sendRedirect("/DemoApp/");
+			System.out.println("redirected");
+			response.sendRedirect("/DemoApp/");
 		}
 	}
 

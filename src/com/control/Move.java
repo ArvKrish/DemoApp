@@ -18,14 +18,14 @@ public class Move extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		Enumeration<String> en = req.getParameterNames();
+		Enumeration<String> en = request.getParameterNames();
 
-		HttpSession session = req.getSession(false);
+		HttpSession session = request.getSession(false);
 		if (session == null) {
 			System.out.println("null");
-			res.sendRedirect("/DemoApp/");
+			response.sendRedirect("/DemoApp/");
 		}
 
 		else if (session != null) {
@@ -35,7 +35,7 @@ public class Move extends HttpServlet {
 
 				int uKey = (int) session.getAttribute("uKey");
 
-				String name = req.getParameter("Action");
+				String name = request.getParameter("Action");
 
 				if ("strike".equalsIgnoreCase(name)) {
 
@@ -46,14 +46,14 @@ public class Move extends HttpServlet {
 						session.setAttribute("playerHealth", playerHealth);
 
 						session.setAttribute("Message", message);
-						RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-						r.forward(req, res);
+						RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+						r.forward(request, response);
 					} else {
 						String message = "strike";
 						session.setAttribute("Message", message);
 
-						RequestDispatcher r = req.getRequestDispatcher("/Opponent.jsp");
-						r.forward(req, res);
+						RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
+						r.forward(request, response);
 					}
 
 				}
@@ -66,16 +66,16 @@ public class Move extends HttpServlet {
 					double playerHealth = Keys.findPlayer(uKey).getHealth();
 					session.setAttribute("playerHealth", playerHealth);
 
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 
 				}
 
 				else if ("addVillain".equalsIgnoreCase(name)) {
 					String message = "";
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/NewOpponent.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/NewOpponent.jsp");
+					r.forward(request, response);
 				} else if ("boost".equalsIgnoreCase(name)) {
 					String message = Keys.boostEnergy(uKey, 0);
 
@@ -83,41 +83,41 @@ public class Move extends HttpServlet {
 					session.setAttribute("playerHealth", playerHealth);
 
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 				} else if ("showvillain".equalsIgnoreCase(name)) {
 					String message = Keys.showList(uKey);
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 				} else if ("compliment".equalsIgnoreCase(name)) {
 					String message = "Compliment";
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/Compliment.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Compliment.jsp");
+					r.forward(request, response);
 				} else if ("showcompliment".equalsIgnoreCase(name)) {
 					String message = "Show Compliment";
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/Opponent.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
+					r.forward(request, response);
 				} else if ("summary".equalsIgnoreCase(name)) {
 					String message = Keys.allSummary(uKey);
 					session.setAttribute("Message", message);
-					RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-					r.forward(req, res);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
 				} else if ("exit".equalsIgnoreCase(name)) {
 					String message = "";
 					session.setAttribute("Message", message);
 					session.invalidate();
 					System.out.println(session.getId());
-					res.sendRedirect("/DemoApp/");
+					response.sendRedirect("/DemoApp/");
 					return;
 				}
 			}
 
 			else {
-				RequestDispatcher r = req.getRequestDispatcher("/Actions.jsp");
-				r.forward(req, res);
+				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+				r.forward(request, response);
 			}
 		}
 	}
