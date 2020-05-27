@@ -1,4 +1,4 @@
-package com.ak;
+package com.model;
 
 public abstract class Character {
 

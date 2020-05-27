@@ -1,4 +1,4 @@
-package com.ak;
+package com.model;
 
 import java.util.*;
 
