@@ -27,7 +27,7 @@ public class Move extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		if (en.hasMoreElements()) {
-			
+
 			context.log(session.getId());
 
 			int uKey = (int) session.getAttribute("uKey");
@@ -96,8 +96,15 @@ public class Move extends HttpServlet {
 				String message = "Show Compliment";
 				session.setAttribute("Message", message);
 				context.log(uKey + " - " + message);
-				RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
-				r.forward(request, response);
+				if (Keys.villainSize(uKey) < 2) {
+					message = Keys.villainAction(uKey, 10, "", 0, "");
+					session.setAttribute("Message", message);
+					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+					r.forward(request, response);
+				} else {
+					RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
+					r.forward(request, response);
+				}
 			} else if ("summary".equalsIgnoreCase(name)) {
 				String message = Keys.allSummary(uKey);
 				session.setAttribute("Message", message);

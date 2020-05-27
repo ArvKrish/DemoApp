@@ -42,7 +42,7 @@ public class Keys {
 		String list = "";
 		Player p = findPlayer(uKey);
 
-		if(p.villains.size()>1) {
+		if(p.villains.size()>0) {
 		list += "The list of Villains are:<br/>";
 
 		for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
