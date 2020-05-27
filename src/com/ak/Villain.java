@@ -19,7 +19,7 @@ public class Villain extends Character {
 
 	public void setCompliment(String compliment) {
 		compliments.add(compliment);
-		System.out.println(compliment);
+		//System.out.println(compliment);
 	}
 
 	public String getCompliments() {

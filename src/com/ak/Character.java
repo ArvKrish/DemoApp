@@ -46,10 +46,10 @@ public abstract class Character {
 
 			if (c.health <= .9999999) {
 				c.health = 0;
-				System.out.println("\n\t" + c.getName() + "'s Health  : " + String.format("%.0f", c.getHealth()));
+				//System.out.println("\n\t" + c.getName() + "'s Health  : " + String.format("%.0f", c.getHealth()));
 				return true;
 			}
-			System.out.println("\n\t" + c.getName() + "'s Health : " + String.format("%.0f", c.getHealth()));
+		//	System.out.println("\n\t" + c.getName() + "'s Health : " + String.format("%.0f", c.getHealth()));
 			return false;
 		} else {
 			double preHealth;
@@ -62,10 +62,10 @@ public abstract class Character {
 
 			if (preHealth <= 0) {
 				preHealth = 0;
-				System.out.println("\n\t" + c.getName() + "'s Health  : " + String.format("%.0f", preHealth));
+				//System.out.println("\n\t" + c.getName() + "'s Health  : " + String.format("%.0f", preHealth));
 				return true;
 			}
-			System.out.println("\n\t" + c.getName() + "'s Health : " + String.format("%.0f", preHealth));
+		//	System.out.println("\n\t" + c.getName() + "'s Health : " + String.format("%.0f", preHealth));
 			return false;
 
 		}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,30 +21,24 @@ public class GetCompliment extends HttpServlet {
 
 		Enumeration<String> en = request.getParameterNames();
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			System.out.println("null");
-			response.sendRedirect("/DemoApp/");
-		}
+		ServletContext context= getServletContext();
+		if (en.hasMoreElements()) {
 
-		else if (session != null) {
+			String compliment = request.getParameter("compliment");
+			if (compliment == null)
+				response.sendRedirect("/DemoApp/");
 
-			if (en.hasMoreElements()) {
+			session.setAttribute("compliment", compliment);
+			session.setAttribute("Message", "Compliment");
 
-				String compliment = request.getParameter("compliment");
-				if (compliment == null)
-					response.sendRedirect("/DemoApp/");
+			RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
+			r.forward(request, response);
 
-				session.setAttribute("compliment", compliment);
-				session.setAttribute("Message", "Compliment");
+		} else {
+			context.log("No parameters- Redirect");
+			RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+			r.forward(request, response);
 
-				RequestDispatcher r = request.getRequestDispatcher("/Opponent.jsp");
-				r.forward(request, response);
-
-			} else {
-				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
-				r.forward(request, response);
-
-			}
 		}
 	}
 }

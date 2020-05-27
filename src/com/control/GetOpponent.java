@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,75 +23,71 @@ public class GetOpponent extends HttpServlet {
 
 		Enumeration<String> en = request.getParameterNames();
 		HttpSession session = request.getSession(false);
+		ServletContext context= getServletContext();
+		context.log(session.getId());
+		if (en.hasMoreElements()) {
 
-		if (session == null) {
-			System.out.println("null");
-			response.sendRedirect("/DemoApp/");
-		}
+			String action = request.getParameter("submit");
 
-		else if (session != null) {
-			if (en.hasMoreElements()) {
+			int uKey = (int) session.getAttribute("uKey");
+			String method = (String) session.getAttribute("Message");
+			//System.out.println(method);
 
-				String action = request.getParameter("submit");
+			String str = "";
+			if ("value".equalsIgnoreCase(action)) {
 
-				int uKey = (int) session.getAttribute("uKey");
-				String method = (String) session.getAttribute("Message");
-				System.out.println(method);
+				String name = request.getParameter("oname");
+				if ("strike".equalsIgnoreCase(method)) {
+					str = Keys.villainAction(uKey, 1, name, 0, "");
+				} else if ("compliment".equalsIgnoreCase(method)) {
 
-				String str = "";
-				if ("value".equalsIgnoreCase(action)) {
-
-					String name = request.getParameter("oname");
-					if ("strike".equalsIgnoreCase(method)) {
-						str = Keys.villainAction(uKey, 1, name, 0, "");
-					} else if ("compliment".equalsIgnoreCase(method)) {
-
-						String compliment = (String) session.getAttribute("compliment");
-						str = Keys.villainAction(uKey, 8, name, 0, compliment);
-						str += "<br/>" + Keys.boostEnergy(uKey, 1);
-					} else if ("show Compliment".equalsIgnoreCase(method)) {
-						str = Keys.villainAction(uKey, 10, name, 0, "");
-					}
-					double playerHealth = Keys.findPlayer(uKey).getHealth();
-					session.setAttribute("playerHealth", playerHealth);
-
-					session.setAttribute("Message", str);
-
-					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
-					r.forward(request, response);
-
+					String compliment = (String) session.getAttribute("compliment");
+					str = Keys.villainAction(uKey, 8, name, 0, compliment);
+					str += "<br/>" + Keys.boostEnergy(uKey, 1);
+				} else if ("show Compliment".equalsIgnoreCase(method)) {
+					str = Keys.villainAction(uKey, 10, name, 0, "");
 				}
-				if ("key".equalsIgnoreCase(action)) {
+				double playerHealth = Keys.findPlayer(uKey).getHealth();
+				session.setAttribute("playerHealth", playerHealth);
 
-					int key = Integer.parseInt(request.getParameter("key"));
-					System.out.println(key + "key");
-					if ("strike".equalsIgnoreCase(method))
-						str = Keys.villainAction(uKey, 1, "", key, "");
-					else if ("compliment".equalsIgnoreCase(method)) {
+				session.setAttribute("Message", str);
 
-						String compliment = (String) session.getAttribute("compliment");
-						str = Keys.villainAction(uKey, 8, "", key, compliment);
-						str += "<br/>" + Keys.boostEnergy(uKey, 1);
-					} else if ("show Compliment".equalsIgnoreCase(method)) {
-						System.out.println("a1");
-						str = Keys.villainAction(uKey, 10, "", key, "");
-						System.out.println("a2");
-					}
-
-					double playerHealth = Keys.findPlayer(uKey).getHealth();
-					session.setAttribute("playerHealth", playerHealth);
-
-					session.setAttribute("Message", str);
-
-					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
-					r.forward(request, response);
-
-				}
-			} else {
 				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
 				r.forward(request, response);
 
 			}
+			if ("key".equalsIgnoreCase(action)) {
+
+				int key = Integer.parseInt(request.getParameter("key"));
+				context.log(key + "key");
+				if ("strike".equalsIgnoreCase(method))
+					str = Keys.villainAction(uKey, 1, "", key, "");
+				else if ("compliment".equalsIgnoreCase(method)) {
+
+					String compliment = (String) session.getAttribute("compliment");
+					str = Keys.villainAction(uKey, 8, "", key, compliment);
+					str += "<br/>" + Keys.boostEnergy(uKey, 1);
+				} else if ("show Compliment".equalsIgnoreCase(method)) {
+					str = Keys.villainAction(uKey, 10, "", key, "");
+				
+				}
+
+				double playerHealth = Keys.findPlayer(uKey).getHealth();
+				session.setAttribute("playerHealth", playerHealth);
+
+				session.setAttribute("Message", str);
+				context.log(uKey+" - " + str);
+				context.log(uKey+" - " + playerHealth);
+				
+				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+				r.forward(request, response);
+
+			}
+		} else {
+			context.log("No parameter - redirect ");
+			RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
+			r.forward(request, response);
+
 		}
 	}
 }

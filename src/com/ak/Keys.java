@@ -81,8 +81,7 @@ public class Keys {
 			String name = oName;
 			int key = oKey;
 			boolean striker = false;
-			System.out.println(key + "gey");
-
+			
 			for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
 				if (key == 0) {
 					Villain v = entry.getValue();
@@ -118,7 +117,7 @@ public class Keys {
 							status += p.strike(v);
 
 							status += "\n Health reduced to " + Math.round(v.getHealth()) + ".";
-							System.out.println(status);
+						//	System.out.println(status);
 							return status;
 
 						} else if (method == 8) {

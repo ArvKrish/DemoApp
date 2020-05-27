@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class Welcome extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		Enumeration<String> en = request.getParameterNames();
-
+		ServletContext context= getServletContext();
 		if (en.hasMoreElements()) {
 
 			String name = (request.getParameter("pname"));
@@ -31,7 +32,7 @@ public class Welcome extends HttpServlet {
 
 				HttpSession session = request.getSession(true);
 
-				System.out.println(session.getId());
+				context.log(session.getId());
 
 				String playerName = Keys.findPlayer(uKey).getName();
 				double playerHealth = Keys.findPlayer(uKey).getHealth();
@@ -46,7 +47,7 @@ public class Welcome extends HttpServlet {
 
 		}
 		else {
-			System.out.println("redirected");
+			context.log("redirected");
 			response.sendRedirect("/DemoApp/");
 		}
 	}

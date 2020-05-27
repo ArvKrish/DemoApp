@@ -77,5 +77,16 @@
 
 	</servlet-mapping>
 
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.control.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/Action</url-pattern>
+		<url-pattern>/Move</url-pattern>
+		<url-pattern>/GetOpponent</url-pattern>
+		<url-pattern>/GetCompliment</url-pattern>
+	</filter-mapping>
 
 </web-app>
