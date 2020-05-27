@@ -26,7 +26,7 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession(false);
 
 		if (session == null) {
-			context.log("redirect");
+			context.log("Sesssion invalid - redirect");
 			res.sendRedirect("/DemoApp/");
 		} else if (session != null) {
 			context.log("Filter pass");

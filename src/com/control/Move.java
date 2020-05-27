@@ -41,7 +41,6 @@ public class Move extends HttpServlet {
 
 					double playerHealth = Keys.findPlayer(uKey).getHealth();
 					session.setAttribute("playerHealth", playerHealth);
-					context.log(uKey + " - " + message);
 					session.setAttribute("Message", message);
 					RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
 					r.forward(request, response);
@@ -62,7 +61,6 @@ public class Move extends HttpServlet {
 
 				double playerHealth = Keys.findPlayer(uKey).getHealth();
 				session.setAttribute("playerHealth", playerHealth);
-				context.log(uKey + " - " + message);
 				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
 				r.forward(request, response);
 
