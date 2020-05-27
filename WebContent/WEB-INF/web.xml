@@ -45,6 +45,7 @@
 
 		<servlet-name>Move</servlet-name>
 		<servlet-class>com.control.Move</servlet-class>
+		
 	</servlet>
 	<servlet-mapping>
 
@@ -76,6 +77,18 @@
 		<url-pattern>/GetCompliment</url-pattern>
 
 	</servlet-mapping>
+<servlet>
+
+		<servlet-name>redirect</servlet-name>
+		<jsp-file>/Actions.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+
+		<servlet-name>redirect</servlet-name>
+		<url-pattern>/Actions</url-pattern>
+
+	</servlet-mapping>
+	
 
 	<filter>
 		<filter-name>LoginFilter</filter-name>

@@ -23,7 +23,7 @@ public class GetOpponent extends HttpServlet {
 
 		Enumeration<String> en = request.getParameterNames();
 		HttpSession session = request.getSession(false);
-		ServletContext context= getServletContext();
+		ServletContext context = getServletContext();
 		context.log(session.getId());
 		if (en.hasMoreElements()) {
 
@@ -31,7 +31,7 @@ public class GetOpponent extends HttpServlet {
 
 			int uKey = (int) session.getAttribute("uKey");
 			String method = (String) session.getAttribute("Message");
-			//System.out.println(method);
+			// System.out.println(method);
 
 			String str = "";
 			if ("value".equalsIgnoreCase(action)) {
@@ -43,7 +43,9 @@ public class GetOpponent extends HttpServlet {
 
 					String compliment = (String) session.getAttribute("compliment");
 					str = Keys.villainAction(uKey, 8, name, 0, compliment);
-					str += "<br/>" + Keys.boostEnergy(uKey, 1);
+					if (!("Opponent does not exist".equalsIgnoreCase(str))) {
+						str += "<br/>" + Keys.boostEnergy(uKey, 1);
+					}
 				} else if ("show Compliment".equalsIgnoreCase(method)) {
 					str = Keys.villainAction(uKey, 10, name, 0, "");
 				}
@@ -69,25 +71,24 @@ public class GetOpponent extends HttpServlet {
 					str += "<br/>" + Keys.boostEnergy(uKey, 1);
 				} else if ("show Compliment".equalsIgnoreCase(method)) {
 					str = Keys.villainAction(uKey, 10, "", key, "");
-				
+
 				}
 
 				double playerHealth = Keys.findPlayer(uKey).getHealth();
 				session.setAttribute("playerHealth", playerHealth);
 
 				session.setAttribute("Message", str);
-				context.log(uKey+" - " + str);
-				context.log(uKey+" - " + playerHealth);
-				
+				context.log(uKey + " - " + str);
+				context.log(uKey + " - " + playerHealth);
+
 				RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
 				r.forward(request, response);
 
 			}
 		} else {
 			context.log("No parameter - redirect ");
-			RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
-			r.forward(request, response);
 
+			response.sendRedirect("/DemoApp/Actions");
 		}
 	}
 }

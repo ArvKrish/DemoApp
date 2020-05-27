@@ -3,8 +3,7 @@ package com.model;
 import java.util.*;
 
 public class Player extends Character {
-	private boolean deathChecker;
-	private boolean healthChecker;
+	
 	public HashMap<Integer, Villain> villains = new HashMap<>();
 	private HashSet<String> attributes = new HashSet<>();
 
@@ -33,12 +32,12 @@ public class Player extends Character {
 	}
 
 	public String strike(Villain v) {
-		healthChecker = (this.getHealth() - (this.getHealth() * (this.getPower() / 200))) > 0 ? true : false;
+		boolean healthChecker = (this.getHealth() - (this.getHealth() * (this.getPower() / 200))) > 0 ? true : false;
 		if (healthChecker) {
 
 			this.decreaseHealth(this, 0);
 
-			deathChecker = this.decreaseHealth(v, 0);
+			boolean deathChecker = this.decreaseHealth(v, 0);
 
 			if (deathChecker) {
 				return "<br/>K.O.<br/>";

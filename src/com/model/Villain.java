@@ -19,19 +19,20 @@ public class Villain extends Character {
 
 	public void setCompliment(String compliment) {
 		compliments.add(compliment);
-		//System.out.println(compliment);
+		// System.out.println(compliment);
 	}
 
 	public String getCompliments() {
-		if (compliments.isEmpty())
+		if (this.compliments.isEmpty())
 			return "No Compliments yet!";
-		String allCompliments = "The Compliments offered to " + this.getName() + " are:<br/>";
-		for (String comp : compliments) {
-			allCompliments += comp + "<br/>";
+		else {
+			String allCompliments = "The Compliments offered to " + this.getName() + " are:<br/>";
+			for (String comp : compliments) {
+				allCompliments += comp + "<br/>";
+			}
+
+			// System.out.println(allCompliments);
+			return allCompliments;
 		}
-
-		System.out.println(allCompliments);
-		return allCompliments;
 	}
-
 }

@@ -36,8 +36,7 @@ public class GetCompliment extends HttpServlet {
 
 		} else {
 			context.log("No parameters- Redirect");
-			RequestDispatcher r = request.getRequestDispatcher("/Actions.jsp");
-			r.forward(request, response);
+			response.sendRedirect("/DemoApp/Actions");
 
 		}
 	}

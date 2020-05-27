@@ -42,6 +42,7 @@ public class Keys {
 		String list = "";
 		Player p = findPlayer(uKey);
 
+		if(p.villains.size()>1) {
 		list += "The list of Villains are:<br/>";
 
 		for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
@@ -50,7 +51,9 @@ public class Keys {
 		}
 
 		return list;
-	}
+	}else {
+		return "You have 0 villains so far. Add more to use this option.";
+	}}
 
 	public static String villainAction(int uKey, int method, String oName, int oKey, String compliment) {
 
@@ -77,11 +80,12 @@ public class Keys {
 
 			}
 
-		} else {
+		}
+
+		else if (p.villains.size() > 1) {
 			String name = oName;
 			int key = oKey;
-			boolean striker = false;
-			
+
 			for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
 				if (key == 0) {
 					Villain v = entry.getValue();
@@ -101,14 +105,10 @@ public class Keys {
 						} else if (method == 10)
 							return showCompliment(entry.getValue());
 
-						striker = true;
-
 					}
 
 				} else if (key > 0) {
 
-					System.out.println(key + "ki");
-					System.out.println(entry.getKey() + "bi");
 					if (entry.getKey() == (key)) {
 						Villain v = p.villains.get(entry.getKey());
 						if (method == 1) {
@@ -117,7 +117,7 @@ public class Keys {
 							status += p.strike(v);
 
 							status += "\n Health reduced to " + Math.round(v.getHealth()) + ".";
-						//	System.out.println(status);
+							// System.out.println(status);
 							return status;
 
 						} else if (method == 8) {
@@ -126,17 +126,13 @@ public class Keys {
 						} else if (method == 10)
 							return showCompliment(entry.getValue());
 
-						striker = true;
 					}
 				}
 
 			}
 
-			if (!striker)
-				return "Opponent does not exist";
-
 		}
-		return "a";
+		return "Opponent does not exist";
 
 	}
 
@@ -144,28 +140,30 @@ public class Keys {
 		Player p = findPlayer(uKey);
 		String compliment = "";
 		String str = "";
-		for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
+		if (p.villains.size() > 0) {
+			for (Map.Entry<Integer, Villain> entry : p.villains.entrySet()) {
 
-			if (method == 1) {
+				if (method == 1) {
 
-				str += "Villain Found - " + entry.getValue().getName() + "\n";
-				str += p.strike(entry.getValue());
+					str += "Villain Found - " + entry.getValue().getName() + "\n";
+					str += p.strike(entry.getValue());
 
-				str += "Health reduced to " + entry.getValue().getHealth();
-				str += "<br/><br/>";
+					str += "Health reduced to " + entry.getValue().getHealth();
+					str += "<br/><br/>";
+				}
+
+				else if (method == 8)
+
+					addCompliment(entry.getValue(), compliment);
+				else if (method == 11)
+					showCompliment(entry.getValue());
+				else
+					entry.getValue().getSummary();
+
 			}
-
-			else if (method == 8)
-
-				addCompliment(entry.getValue(), compliment);
-			else if (method == 11)
-				showCompliment(entry.getValue());
-			else
-				entry.getValue().getSummary();
-
-		}
-		return str;
-
+			return str;
+		} else
+			return "Opponent does not exist";
 	}
 
 	public static String boostEnergy(int uKey, int method) {
