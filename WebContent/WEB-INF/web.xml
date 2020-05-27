@@ -96,6 +96,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/Actions</url-pattern>
 		<url-pattern>/Action</url-pattern>
 		<url-pattern>/Move</url-pattern>
 		<url-pattern>/GetOpponent</url-pattern>
